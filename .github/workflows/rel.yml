@@ -17,15 +17,19 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
+      - name: 7zip
+        run: sudo apt-get install p7zip-full
+
+
+
       - name: Build project
         run: dotnet build --configuration Debug
 
       - name: Publish project
         run: dotnet publish --configuration Debug --output ./ConsoleApp1/bin/Debug/net8.0
 
-      - name: Archive folder
-        working-directory: ./ConsoleApp1/bin/Debug
-        run: 7zip -r Recursion.7zip ./net8.0
+      - name: create archive
+        run: 7z a -t7z Recursion.7zip ./net8.0
 
       - name: Create Release 
         id: create_release
